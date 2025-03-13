@@ -16,24 +16,38 @@ A comprehensive CLI tool to manage Git repositories with ease. This tool provide
 - **Untracked File Management**: List, add, and clean untracked files
 - **File Picker**: Browse, cherry-pick, and compare files across different branches
 
+## Version History
+
+The project has evolved through several versions:
+
+- **v1**: Initial version with basic Git operations
+- **v2**: Added tag versioning and merge branches functionality
+- **v5**: Modular version with libraries split into separate files
+
+The main script (`git-manager.sh`) is now designed to work with separate library files for better maintainability. The file `versions/v2_git-manager.sh` is kept as a standalone demo version that includes all functionality in a single file.
+
 ## Installation
 
-### Automatic Installation (Recommended)
+### Quick Setup (Using the Setup Script)
 
-1. Download the installation script:
+1. Clone the repository:
    ```bash
-   curl -O https://raw.githubusercontent.com/your-username/git-manager/main/install.sh
+   git clone https://github.com/your-username/git-manager.git
+   cd git-manager
    ```
 
-2. Make it executable:
+2. Run the setup script:
    ```bash
-   chmod +x install.sh
+   chmod +x setup-script.sh
+   ./setup-script.sh
    ```
 
-3. Run the installer:
-   ```bash
-   ./install.sh
-   ```
+3. The setup script will:
+   - Check for required libraries
+   - Create the necessary directory structure
+   - Copy all library files to their correct locations
+   - Make the script executable
+   - Create a symbolic link (if possible)
 
 ### Manual Installation
 
@@ -47,14 +61,49 @@ A comprehensive CLI tool to manage Git repositories with ease. This tool provide
    mv git-manager ~/.git-manager
    ```
 
-3. Create a symbolic link:
+3. Create the lib directory:
+   ```bash
+   mkdir -p ~/.git-manager/lib
+   ```
+
+4. Copy the library files:
+   ```bash
+   cp git-manager/lib-*.sh ~/.git-manager/lib/
+   ```
+
+5. Rename the library files:
+   ```bash
+   cd ~/.git-manager/lib/
+   for file in lib-*.sh; do mv "$file" "${file#lib-}"; done
+   ```
+
+6. Create a symbolic link:
    ```bash
    ln -s ~/.git-manager/git-manager.sh /usr/local/bin/git-manager
    ```
 
-4. Make the script executable:
+7. Make the script executable:
    ```bash
    chmod +x ~/.git-manager/git-manager.sh
+   ```
+
+### Using the Standalone Demo Version
+
+If you prefer to use the standalone demo version (all functionality in a single file):
+
+1. Copy the demo version to a location of your choice:
+   ```bash
+   cp versions/v2_git-manager.sh ~/git-manager.sh
+   ```
+
+2. Make it executable:
+   ```bash
+   chmod +x ~/git-manager.sh
+   ```
+
+3. Run it from any Git repository:
+   ```bash
+   ~/git-manager.sh
    ```
 
 ## Usage
@@ -84,21 +133,34 @@ git-manager
 
 ```
 .
-├── git-manager.sh       # Main script file
-├── lib/                 # Library directory
-│   ├── colors.sh        # Color definitions
-│   ├── common.sh        # Common utilities
-│   ├── branch.sh        # Branch management functions
-│   ├── commit.sh        # Commit functions
-│   ├── merge.sh         # Merge functions
-│   ├── tags.sh          # Tag management functions
-│   ├── remotes.sh       # Remote management functions
-│   ├── logs.sh          # Log viewing functions
-│   ├── untracked.sh     # Untracked file management
-│   └── file_picker.sh   # File picker functions
-├── install.sh           # Installation script
-└── README.md            # This file
+├── git-manager.sh                # Main script file (modular version)
+├── lib-*.sh                      # Library files (with 'lib-' prefix)
+├── versions/                     # Previous versions
+│   ├── v1_git-manager.sh         # Initial version
+│   ├── v2_git-manager.sh         # Enhanced version (standalone demo)
+│   └── v5_git-manager.sh         # Modular version
+├── setup-script.sh               # Installation script
+└── README.md                     # This file
 ```
+
+## Improvements and Future Features
+
+The modular version has some improvements over the standalone demo version (`versions/v2_git-manager.sh`):
+
+1. **Better Organization**: Each functionality is now in its own file for easier maintenance.
+2. **Persistent Submenus**: All submenus now stay open until you explicitly return to the main menu.
+3. **File Picker**: Added a new feature to browse, cherry-pick, and compare files across different branches.
+
+Features that could be added in future versions:
+
+1. **Stash Management**: Save and apply stashes
+2. **Git Flow Support**: Integration with Git Flow branching model
+3. **Git Hooks Management**: Create and manage Git hooks
+4. **Interactive Rebasing**: Support for interactive rebasing operations
+5. **Multiple Repository Management**: Manage multiple Git repositories from a single interface
+6. **Conflict Resolution**: Improved tools for resolving merge conflicts
+7. **History Visualization**: Better visualization of repository history
+8. **Configuration Management**: Interface for managing Git configuration settings
 
 ## Solving the Branch Rename Issue
 
@@ -118,7 +180,3 @@ MIT License
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
-
-
-## last working before modules
-# versions/v2_git-manager.sh

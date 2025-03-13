@@ -118,3 +118,7 @@ MIT License
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
+
+
+## last working before modules
+# versions/v2_git-manager.sh
